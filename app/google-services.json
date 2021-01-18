@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "860287901728",
+    "project_id": "my-project-omb",
+    "storage_bucket": "my-project-omb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860287901728:android:6830d399245f2a32c61c45",
+        "android_client_info": {
+          "package_name": "com.intersiot.ohmybank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860287901728-gl9pc7g0pknn0gei71ad3i57kt6c5ggh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3JseZ6P5yceabazIkTMhtaZhGz3ab5wI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860287901728-gl9pc7g0pknn0gei71ad3i57kt6c5ggh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
