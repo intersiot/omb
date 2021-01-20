@@ -12,14 +12,13 @@ import com.intersiot.ohmybank.databinding.ActivityMainBinding
 class ConsentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConsentBinding
 
-    var tag: String = "ConsetActivity"
+    var tag = "ConsetActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConsentBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-//        setContentView(R.layout.activity_consent)
     }
 
     // 동의 취소 버튼 클릭시
@@ -29,7 +28,7 @@ class ConsentActivity : AppCompatActivity() {
     }
 
     // 동의버튼 클릭시 이벤트 처리
-    fun onConset(view: View) {
+    fun onConsent(view: View) {
         var promotion: Boolean = false
 
         /**

@@ -50,4 +50,5 @@ class IntroActivity : AppCompatActivity() {
         // Activity Pause 상태일 때는 runnable도 중단하도록 함
         handler?.removeCallbacks(runnable)
     } // end onPause()
+
 } // end Activity

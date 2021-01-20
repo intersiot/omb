@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ohmybank">
-        <activity android:name=".JoinActivity"></activity>
-        <activity android:name=".ConsentActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".JoinActivity" />
+        <activity android:name=".ConsentActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".IntroActivity">
             <intent-filter>

@@ -148,6 +148,8 @@
                         android:id="@+id/button"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
+                        android:background="#2196F3"
+                        android:textColor="#ffffff"
                         android:text="취소"
                         android:onClick="onCancel"
                         app:layout_constraintStart_toStartOf="parent"
@@ -157,8 +159,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="#2196F3"
-                        android:text="확인"
                         android:textColor="#ffffff"
+                        android:text="확인"
                         android:onClick="onConsent"
                         app:layout_constraintStart_toEndOf="@+id/button"
                         app:layout_constraintTop_toTopOf="parent" />
