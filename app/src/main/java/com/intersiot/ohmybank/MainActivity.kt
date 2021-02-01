@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 계좌이체 버튼 클릭
+    fun accountTransfer(view: View) {
+        Log.d(tag, "계좌이체 버튼 선택됨")
+    }
+
     // 로그아웃
     fun logoutBtn(view: View) {
         Log.d(tag, "로그아웃 성공")
