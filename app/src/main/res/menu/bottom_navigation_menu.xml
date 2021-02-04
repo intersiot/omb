@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mybank"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="내통장"/>
+    <item
+        android:id="@+id/financial"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_card_giftcard_24"
+        android:title="금융상품"/>
+    <item
+        android:id="@+id/allmenu"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_dehaze_24"
+        android:title="전체메뉴"/>
+</menu>
