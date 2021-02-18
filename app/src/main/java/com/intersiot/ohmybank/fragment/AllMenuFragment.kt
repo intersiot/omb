@@ -14,4 +14,14 @@ class AllMenuFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_all_menu, container, false)
     }
+
+    // 계좌 이체 버튼
+    fun accountTransfer(view: View) {
+        
+    }
+
+    // 로그아웃 버튼
+    fun logoutBtn(view: View) {
+
+    }
 }

@@ -3,9 +3,6 @@ package com.intersiot.ohmybank.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.intersiot.ohmybank.fragment.AllMenuFragment
-import com.intersiot.ohmybank.fragment.FinancialFragment
-import com.intersiot.ohmybank.fragment.MybankFragment
 
 class ViewPagerAdapter(fm: FragmentManager, val fragmentCount: Int)
     : FragmentStatePagerAdapter(fm) {

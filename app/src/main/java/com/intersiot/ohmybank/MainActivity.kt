@@ -1,15 +1,11 @@
 package com.intersiot.ohmybank
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.intersiot.ohmybank.adapter.ViewPagerAdapter
 import com.intersiot.ohmybank.databinding.ActivityMainBinding
-import com.intersiot.ohmybank.fragment.AllMenuFragment
 import com.intersiot.ohmybank.fragment.FinancialFragment
 import com.intersiot.ohmybank.fragment.MybankFragment
 import com.intersiot.ohmybank.model.UserDTO
@@ -64,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager, 3)
         adapter.addFragment(MybankFragment())
         adapter.addFragment(FinancialFragment())
-        adapter.addFragment(AllMenuFragment())
+        adapter.addFragment(`AllMenuFragment.kt`())
         binding.viewpager.adapter = adapter
         // 하단 네비게이션과 뷰페이저 연결
         binding.layoutNavigation.setupWithViewPager(binding.viewpager)
