@@ -102,7 +102,7 @@
         성명: 박송이\n
         직책: 개발자\n
         직급: 개발자\n
-        연락처: lafefe.90@gmail.com\n
+        연락처: maybeormaybenot.030@gmail.com\n
         \n\n\n
         10. 개인정보 처리방침 변경
         \n\n
@@ -123,4 +123,8 @@
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--  계좌생성 개인정보처리 동의여부  -->
+    <string name="create_account">
+        오마이뱅크에서 제공하는 계
+    </string>
 </resources>

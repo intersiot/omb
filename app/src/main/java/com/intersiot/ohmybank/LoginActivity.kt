@@ -23,15 +23,13 @@ class LoginActivity : AppCompatActivity() {
     private var firestore = FirebaseFirestore.getInstance()
     private lateinit var googleSignInClient : GoogleSignInClient
     // lateinit: 초기화를 뒤로 미루는 키워드
-    private lateinit var binding: ActivityLoginBinding
+//    private lateinit var binding: ActivityLoginBinding
+    val binding by lazy { ActivityLoginBinding.inflate((layoutInflater)) }
     var tag: String = "LoginActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-//        setContentView(R.layout.activity_login)
+        setContentView(binding.root) // *setContentView에는 binding.root를 꼭 전달해야 한다.
 
         // auto login
         if(mAuth.currentUser != null) {

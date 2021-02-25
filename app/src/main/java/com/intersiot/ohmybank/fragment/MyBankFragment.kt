@@ -9,15 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
+import com.intersiot.ohmybank.CreateAccountActivity
 import com.intersiot.ohmybank.LoginActivity
 import com.intersiot.ohmybank.R
 import com.intersiot.ohmybank.databinding.FragmentMybankBinding
 import com.intersiot.ohmybank.model.UserDTO
 
 class MybankFragment : Fragment() {
-    // layout view
-    private lateinit var binding: FragmentMybankBinding
-
     // firebase 인증
     private var mAuth = FirebaseAuth.getInstance()
     private var firestroe = FirebaseFirestore.getInstance()
@@ -30,28 +29,48 @@ class MybankFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_mybank, container, false)
+        val binding = FragmentMybankBinding.inflate(inflater, container, false)
 
-//        if (id != null) {
-//            firestroe.collection("Users").document(id!!).get()
-//                .addOnSuccessListener { documentSnapshot ->
-////                    users = documentSnapshot.toObject<UserDTO>()!!
-//                    name = users.name
-//                    binding.userName.text = name
-//                    Log.d(tag, "유저 이름 ${name}으로 자동 변경됨, ${users.id}")
-//                }
-//        }
+        if (id != null) {
+            firestroe.collection("Users").document(id!!).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    users = documentSnapshot.toObject<UserDTO>()!!
+                    name = users.name
+                    binding.userName.text = name
+                    Log.d(tag, "유저 이름 ${name}으로 자동 변경됨, ${users.id}")
+                }
+        }
+
+        // 계좌 이체 버튼 클릭시
+        binding.btnTransfer.setOnClickListener {
+            Log.d(tag, "계좌이체 버튼 선택됨")
+        }
+
+        // 계좌 생성 버튼 클릭시
+        binding.layoutCreateAccount.setOnClickListener {
+//            Log.d(tag, "계좌생성 선택됨")
+            /**
+             * 랜덤함수 사용해서 계좌 만들기 (중복제거)
+             * CreateAccountActivity로 넘어가서 주의사항 안내하고 생성
+             * 완료 후 생성된 계좌번호 보여주고 -> 메인액티비티로 이동
+              */
+            val intent = Intent(context, CreateAccountActivity::class.java)
+            Log.d(tag, "계좌생성 액티비티로 이동")
+            startActivity(intent)
+        }
+
+        // 로그아웃 버튼 클릭시
+        binding.btnLogout.setOnClickListener {
+            val intent = Intent(context, LoginActivity::class.java);
+            Log.d(tag, "로그아웃 성공")
+            mAuth.signOut()
+            startActivity(intent)
+        }
+
+        return binding.root
     }
 
-//    // 계좌이체 버튼 클릭
-//    fun accountTransfer(view: View) {
-//        Log.d(tag, "계좌이체 버튼 선택됨")
-//    }
-//
-//    // 로그아웃
-//    fun logoutBtn(view: View) {
-//        Log.d(tag, "로그아웃 성공")
-//        mAuth.signOut()
-//        startActivity(Intent(this, LoginActivity::class.java))
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
 }
