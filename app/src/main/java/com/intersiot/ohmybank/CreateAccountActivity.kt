@@ -3,9 +3,12 @@ package com.intersiot.ohmybank
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import java.util.*
 
 class CreateAccountActivity : AppCompatActivity() {
     private val tag: String = "CreateAccountActivity"
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,5 +22,9 @@ class CreateAccountActivity : AppCompatActivity() {
      */
     fun onCreateAccount() {
         Log.d(tag, "계좌생성 선택됨")
+    }
+
+    fun createAccount() {
+        
     }
 }
