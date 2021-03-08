@@ -2,6 +2,10 @@ package com.intersiot.ohmybank
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.intersiot.ohmybank.adapter.ViewPagerAdapter
 import com.intersiot.ohmybank.databinding.ActivityMainBinding
 

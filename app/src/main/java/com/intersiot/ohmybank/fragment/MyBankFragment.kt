@@ -11,8 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.intersiot.ohmybank.CreateAccountActivity
+import com.intersiot.ohmybank.DepositActivity
 import com.intersiot.ohmybank.LoginActivity
-import com.intersiot.ohmybank.R
 import com.intersiot.ohmybank.databinding.FragmentMybankBinding
 import com.intersiot.ohmybank.model.UserDTO
 
@@ -25,6 +25,8 @@ class MybankFragment : Fragment() {
     var users = UserDTO()
     private var id = mAuth.currentUser?.email
     private var name: String? = null
+    private var account: String? = null
+    private var cache: Int? = null
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -36,8 +38,14 @@ class MybankFragment : Fragment() {
                 .addOnSuccessListener { documentSnapshot ->
                     users = documentSnapshot.toObject<UserDTO>()!!
                     name = users.name
+                    account = users.account
+                    cache = users.cache
                     binding.userName.text = name
+                    binding.accountView.text = account
+                    binding.accoutName.text = "생성된 계좌번호:"
+                    binding.moneyView.text = cache.toString()
                     Log.d(tag, "유저 이름 ${name}으로 자동 변경됨, ${users.id}")
+                    Log.d(tag, "생성된 계좌번호: $account, 금액: $cache")
                 }
         }
 
@@ -56,6 +64,13 @@ class MybankFragment : Fragment() {
               */
             val intent = Intent(context, CreateAccountActivity::class.java)
             Log.d(tag, "계좌생성 액티비티로 이동")
+            startActivity(intent)
+        }
+
+        // 내 통장 입금 클릭시
+        binding.layoutDeposit.setOnClickListener {
+            val intent = Intent(context, DepositActivity::class.java)
+            Log.d(tag, "내통장 입금 액티비티로 이동")
             startActivity(intent)
         }
 
