@@ -3,17 +3,17 @@ package com.intersiot.ohmybank.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.intersiot.ohmybank.fragment.AllMenuFragment
-import com.intersiot.ohmybank.fragment.MybankFragment
+import com.intersiot.ohmybank.fragment.MyBankFragment
+import com.intersiot.ohmybank.fragment.NewsFragment
 import com.intersiot.ohmybank.fragment.TransactionFragment
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> { MybankFragment() }
+            0 -> { MyBankFragment() }
             1 -> { TransactionFragment() }
-            else -> { return AllMenuFragment() }
+            else -> { return NewsFragment() }
         }
     }
 

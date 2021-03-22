@@ -13,10 +13,10 @@ import com.google.firebase.firestore.ktx.toObject
 import com.intersiot.ohmybank.CreateAccountActivity
 import com.intersiot.ohmybank.DepositActivity
 import com.intersiot.ohmybank.LoginActivity
-import com.intersiot.ohmybank.databinding.FragmentMybankBinding
+import com.intersiot.ohmybank.databinding.FragmentMyBankBinding
 import com.intersiot.ohmybank.model.UserDTO
 
-class MybankFragment : Fragment() {
+class MyBankFragment : Fragment() {
     // firebase 인증
     private var mAuth = FirebaseAuth.getInstance()
     private var firestroe = FirebaseFirestore.getInstance()
@@ -31,7 +31,7 @@ class MybankFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding = FragmentMybankBinding.inflate(inflater, container, false)
+        val binding = FragmentMyBankBinding.inflate(inflater, container, false)
 
         if (id != null) {
             firestroe.collection("Users").document(id!!).get()
@@ -45,7 +45,8 @@ class MybankFragment : Fragment() {
                     binding.accoutName.text = "생성된 계좌번호:"
                     binding.moneyView.text = cache.toString()
                     Log.d(tag, "유저 이름 ${name}으로 자동 변경됨, ${users.id}")
-                    Log.d(tag, "생성된 계좌번호: $account, 금액: $cache")
+                    Log.d(tag, "생성된 계좌번호: $account")
+                    Log.d(tag, "현재 보유중인 금액: $cache")
                 }
         }
 

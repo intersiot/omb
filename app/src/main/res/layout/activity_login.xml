@@ -28,7 +28,8 @@
         app:counterMaxLength="32"
         app:helperText="Please enter an email"
         app:helperTextEnabled="true"
-        app:boxStrokeColor="@color/teal_200"
+        app:boxStrokeColor="@color/customColor"
+        app:hintTextColor="@color/customColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -36,7 +37,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_id"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textCursorDrawable="@drawable/cursordrawable" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -50,6 +52,8 @@
         app:errorEnabled="true"
         app:helperText="Please enter an password"
         app:helperTextEnabled="true"
+        app:boxStrokeColor="@color/customColor"
+        app:hintTextColor="@color/customColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_id_layout">
@@ -58,7 +62,8 @@
             android:id="@+id/login_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/cursordrawable" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -66,7 +71,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="#2196F3"
+        android:backgroundTint="@color/logoColor"
         android:text="로그인"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -80,7 +85,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#196DB0"
+        android:backgroundTint="#EA4335"
         android:text="구글 이메일로 로그인"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
