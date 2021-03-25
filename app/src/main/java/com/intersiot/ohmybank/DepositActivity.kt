@@ -5,16 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.annotation.IntegerRes
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.intersiot.ohmybank.databinding.ActivityCreateAccountBinding
 import com.intersiot.ohmybank.databinding.ActivityDepositBinding
-import com.intersiot.ohmybank.databinding.ActivityLoginBinding
-import com.intersiot.ohmybank.fragment.TransactionFragment
 import com.intersiot.ohmybank.model.UserDTO
-import java.text.DecimalFormat
 
 class DepositActivity : AppCompatActivity() {
     private val tag: String = "DepositActivity"
@@ -46,6 +41,15 @@ class DepositActivity : AppCompatActivity() {
                     Log.d(tag, "계좌번호: $account 로 변경됨")
                 }
         }
+
+        // 로그아웃 버튼 클릭시
+        binding.btnLogout.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java);
+            Log.d(tag, "로그아웃 성공")
+            mAuth.signOut()
+            startActivity(intent)
+        }
+
     } // end onCreate()
 
     fun onDeposit(view: View) {

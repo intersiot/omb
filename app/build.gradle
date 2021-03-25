@@ -57,12 +57,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    // jsoup 라이브러리
-    implementation 'org.jsoup:jsoup:1.12.2'
     // 리사이클러뷰
     //noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     // glide 라이브러리
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    // Volley
+    implementation 'com.android.volley:volley:1.2.0'
+    // 웹 크롤링
+    implementation 'org.jsoup:jsoup:1.12.2'
+    // Anko  lib
+    implementation 'org.jetbrains.anko:anko-common:0.9'
 }

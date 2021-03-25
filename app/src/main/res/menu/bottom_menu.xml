@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tab_mybank"
+        android:title="내 통장"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/tab_tras"
+        android:title="거래내역"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_card_giftcard_24"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/tab_news"
+        android:title="금융뉴스"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_dehaze_24"
+        app:showAsAction="always" />
+</menu>

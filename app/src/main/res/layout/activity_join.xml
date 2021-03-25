@@ -39,6 +39,8 @@
                 app:counterMaxLength="10"
                 app:helperText="Please enter an name"
                 app:helperTextEnabled="true"
+                app:boxStrokeColor="@color/customColor"
+                app:hintTextColor="@color/customColor"
                 app:layout_constraintTop_toBottomOf="@+id/logo_big">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -60,6 +62,8 @@
                 app:counterMaxLength="11"
                 app:helperText="Please enter an phone number"
                 app:helperTextEnabled="true"
+                app:boxStrokeColor="@color/customColor"
+                app:hintTextColor="@color/customColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_name_layout">
@@ -84,6 +88,8 @@
                 app:counterMaxLength="32"
                 app:helperText="Please enter an email"
                 app:helperTextEnabled="true"
+                app:boxStrokeColor="@color/customColor"
+                app:hintTextColor="@color/customColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_phone_layout">
@@ -107,6 +113,8 @@
                 app:counterMaxLength="20"
                 app:helperText="Please enter an password"
                 app:helperTextEnabled="true"
+                app:boxStrokeColor="@color/customColor"
+                app:hintTextColor="@color/customColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_id_layout">
@@ -131,6 +139,8 @@
                 app:counterMaxLength="20"
                 app:helperText="Please check the password you entered"
                 app:helperTextEnabled="true"
+                app:boxStrokeColor="@color/customColor"
+                app:hintTextColor="@color/customColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_password_layout">
@@ -150,9 +160,9 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="32dp"
-                android:background="@drawable/btn_round_fill"
                 android:onClick="onJoinClick"
                 android:text="회원가입"
+                android:backgroundTint="#2196F3"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

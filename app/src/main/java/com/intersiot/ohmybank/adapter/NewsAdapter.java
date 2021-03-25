@@ -11,9 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.intersiot.ohmybank.NewsWebViewActivity;
 import com.intersiot.ohmybank.R;
-import com.intersiot.ohmybank.fragment.NewsWebViewFragment;
 import com.intersiot.ohmybank.model.NewsDTO;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public NewsAdapter(setActivityMove listener){
         this.listener = listener;
     }
+    @NotNull
     @Override
     public NewsAdapter.NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
@@ -48,30 +51,29 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         NewsDTO news = mDataset.get(position);
 
         String title = news.getTitle();
-        if (title != null && title.length() > 0) {
+
+        if(title != null && title.length() > 0) {
             holder.textView_title.setText(title);
-        } else {
+        }else {
             holder.textView_title.setText("-");
         }
         String info = news.getInfo();
-        if (info != null && info.length() > 0) {
+        if(info != null && info.length() > 0) {
             holder.textView_info.setText(info);
-        } else {
+        }else {
             holder.textView_info.setText("-");
         }
-
 
         Glide.with(holder.itemView.getContext()).load(news.getThumbnail()).into(holder.imageView_title);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), NewsWebViewFragment.class);
+                Intent intent = new Intent(holder.itemView.getContext(), NewsWebViewActivity.class);
                 intent.putExtra("url", mDataset.get(position).getUrl());
                 listener.activityMove(intent);
             }
         });
-
     }
 
     @Override

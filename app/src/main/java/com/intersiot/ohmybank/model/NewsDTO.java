@@ -8,11 +8,10 @@ public class NewsDTO implements Serializable {
     private String info;
     private String url;
 
-    public NewsDTO() {}
-    public NewsDTO(String title,
-                   String thumbnail,
-                   String info,
-                   String url) {
+    public NewsDTO() {
+    }
+
+    public NewsDTO(String title, String thumbnail, String info, String url) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.info = info;
