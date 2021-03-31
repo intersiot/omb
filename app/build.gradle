@@ -55,6 +55,8 @@ dependencies {
     // Declare the dependencies for any other desired Firebase products
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    // FirebaseRecyclerAdapter 사용하기 위해서
+    implementation 'com.firebaseui:firebase-ui-database:6.2.0'
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     // 리사이클러뷰

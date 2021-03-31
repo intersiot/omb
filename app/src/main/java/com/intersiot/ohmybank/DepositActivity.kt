@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.intersiot.ohmybank.adapter.TransactAdapter
 import com.intersiot.ohmybank.databinding.ActivityDepositBinding
+import com.intersiot.ohmybank.model.TransactDTO
 import com.intersiot.ohmybank.model.UserDTO
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DepositActivity : AppCompatActivity() {
     private val tag: String = "DepositActivity"
@@ -18,13 +24,15 @@ class DepositActivity : AppCompatActivity() {
     // firebase 인증
     private var firestore = FirebaseFirestore.getInstance()
     private var mAuth = FirebaseAuth.getInstance()
+    private var reference = FirebaseDatabase.getInstance() // 리얼타임 데이터베이스
     // 유저 정보 가져오기 위한 초석
-    var users = UserDTO()
+    private var users = UserDTO()
     private var id = mAuth.currentUser?.email
-//    var format = DecimalFormat("###,###,###,###")
-    var cache = 0
-    private lateinit var email: String
+    private var cache = 0
     private var account: String? = null
+    private lateinit var email: String
+    private lateinit var time: String // 시간
+    private lateinit var adater: TransactAdapter // 거래내역 어댑터
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +74,19 @@ class DepositActivity : AppCompatActivity() {
             // 캐시가 20억이 넘을 경우 20억으로 고정: Int 형 값 넘어가는 오류 방지
             if (myCache + cache.toLong() > 2000000000) {
                 myCache == 2000000000
-
+                // 내 통장에 입금한 금액 데이터 전달하기
+                var transfer = TransactDTO.DepositAndWithdrawal()
+                var deposit = transfer.deposit // 입금 금액
+                var dateFormat = SimpleDateFormat("yyyy-MM-dd") // 거래 시간
+                var mDate = Date()
+                account = transfer.account // 입금한 계좌(여기선 내 계좌)
+                transfer.timestamp = System.currentTimeMillis()
+                // 입금 내역 리얼타임데이터베이스에 추가
+                reference.reference.child("Transact").child(time)
+                    .child("transfers").push()
+                    .setValue(transfer).addOnCompleteListener {
+//                        inputCache.text = null
+                    }
             } else { // 그 외는 입금한 금액만큼만
                 myCache += cache
             }
@@ -76,6 +96,17 @@ class DepositActivity : AppCompatActivity() {
             finish()
         }
         Log.d(tag, "내 통장에 입금 성공")
+    }
+    
+    // 리사이클러뷰 설정
+    fun setRecycler() {
+        var query = reference.reference.child("Transact")
+            .child(time).child("transfer")
+            .orderByChild("timestamp")
+        var options = FirebaseRecyclerOptions.Builder<TransactDTO.DepositAndWithdrawal>()
+            .setQuery(query, TransactDTO.DepositAndWithdrawal::class.java).build()
+//        adapter = TransactAdapter(options, this)
+        
     }
 
     fun onDepositCancel(view: View) {

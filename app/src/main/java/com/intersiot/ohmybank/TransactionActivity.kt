@@ -13,7 +13,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.intersiot.ohmybank.adapter.TransactAdapter
 import com.intersiot.ohmybank.databinding.ActivityTransactionBinding
+import com.intersiot.ohmybank.model.TransactDTO
 import com.intersiot.ohmybank.model.UserDTO
 
 class TransactionActivity : AppCompatActivity() {
@@ -22,13 +24,11 @@ class TransactionActivity : AppCompatActivity() {
     // firebase 인증
     private var mAuth = FirebaseAuth.getInstance()
     private var firestroe = FirebaseFirestore.getInstance()
-    // 유저 정보 가져오기
-    private var users = UserDTO()
-    private var id = mAuth.currentUser?.email
-    private var account: String? = null
-    private var cache: Int? = null
-    // 리사이클러뷰
-//    lateinit var recyclerView: RecyclerView
+    // 계좌 거래내역을 저장할 변수
+    private var transfer = TransactDTO.DepositAndWithdrawal()
+    // 계좌 거래내역 리사이클러 어댑터
+    private lateinit var adapter: TransactAdapter
+
 
     var tag = "TransactionActivity"
 
@@ -38,15 +38,16 @@ class TransactionActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        var moneyView = binding.moneyView.text
-//        cache = Integer.parseInt(moneyView.toString())
+        // 유저 정보 가져오기
+        var users = UserDTO()
+        var id = mAuth.currentUser?.email
 
         if (id != null) {
             firestroe.collection("Users").document(id!!).get()
                     .addOnSuccessListener { documentSnapshot ->
                         users = documentSnapshot.toObject<UserDTO>()!!
-                        account = users.account
-                        cache = users.cache
+                        var account = users.account
+                        var cache = users.cache
                         binding.accountView.text = account
                         binding.moneyView.text = cache.toString()
                         Log.d(tag, "생성된 계좌번호: ${account}로 변경됨")
