@@ -65,11 +65,6 @@ class MainActivity : AppCompatActivity() {
                     }
         }
 
-        // 계좌 이체 버튼 클릭시
-        binding.btnTransfer.setOnClickListener {
-            Log.d(tag, "계좌이체 버튼 선택됨")
-        }
-
         // 계좌 생성 버튼 클릭시
         binding.layoutCreateAccount.setOnClickListener {
 //            Log.d(tag, "계좌생성 선택됨")
@@ -83,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 내 통장 입금 클릭시
+        // 입출금 클릭시
         binding.layoutDeposit.setOnClickListener {
             val intent = Intent(this, DepositActivity::class.java)
             Log.d(tag, "내통장 입금 액티비티로 이동")

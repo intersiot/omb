@@ -45,7 +45,7 @@ class DepositActivity : AppCompatActivity() {
                 .addOnSuccessListener { documentSnapshot ->
                     users = documentSnapshot.toObject<UserDTO>()!!
                     account = users.account
-                    binding.accountView.text = account
+                    binding.accountViewNumber.text = account
                     Log.d(tag, "계좌번호: $account 로 변경됨")
                 }
         }
