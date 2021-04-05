@@ -5,18 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.intersiot.ohmybank.R
 import com.intersiot.ohmybank.model.TransactDTO
-import java.text.SimpleDateFormat
 import java.util.*
 
-class TransactAdapter(options: FirebaseRecyclerOptions<TransactDTO.DepositAndWithdrawal>) :
-        FirebaseRecyclerAdapter<TransactDTO.DepositAndWithdrawal,
-                TransactAdapter.TransactHolder>(options) {
+class TransactAdapter(options: FirebaseRecyclerOptions<TransactDTO>) :
+        FirebaseRecyclerAdapter<TransactDTO, TransactAdapter.TransactHolder>(options) {
 
     class TransactHolder(itemView: View) :
             RecyclerView.ViewHolder(itemView) {
@@ -47,7 +44,7 @@ class TransactAdapter(options: FirebaseRecyclerOptions<TransactDTO.DepositAndWit
     override fun onBindViewHolder(
             holder: TransactHolder,
             position: Int,
-            model: TransactDTO.DepositAndWithdrawal) {
+            model: TransactDTO) {
 
         holder.account.text = model.account
         holder.transferCache.text = model.deposit.toString()

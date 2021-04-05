@@ -1,12 +1,8 @@
 package com.intersiot.ohmybank.model
 
-data class TransactDTO (
-    var transfer: Map<String, DepositAndWithdrawal> = HashMap())
-{
-    data class DepositAndWithdrawal (
-        var account: String? = null,
-        var deposit: Int? = 0,
-        var withdrawal: Int? = 0,
-        var timestamp: Long? = 0,
-        var cache: Int? = 0)
-}
+data class TransactDTO (var id: String ?= null,
+                        var account: String ?= null,
+                        var cache: Int = 0,
+                        var deposit: Int = 0,
+                        var withdrawal: Int = 0,
+                        var timestamp: Long = 0)

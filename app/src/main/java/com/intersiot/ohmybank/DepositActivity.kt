@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -24,10 +25,11 @@ class DepositActivity : AppCompatActivity() {
     // firebase 인증
     private var firestore = FirebaseFirestore.getInstance()
     private var mAuth = FirebaseAuth.getInstance()
-    private var reference = FirebaseDatabase.getInstance() // 리얼타임 데이터베이스
-    // 유저 정보 가져오기 위한 초석
-    private var users = UserDTO()
-    private var id = mAuth.currentUser?.email
+    private var reference = FirebaseDatabase.getInstance()
+
+    private var transfer = TransactDTO.DepositAndWithdrawal()
+
+    private var myAccount: String? = null
     private var cache = 0
     private var account: String? = null
     private lateinit var email: String
@@ -40,15 +42,25 @@ class DepositActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        time = intent.setStringExtra()
+
+        // 유저 아이디 가져오기
+        var id = mAuth.currentUser?.email
         if (id != null) {
             firestore.collection("Users").document(id!!).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    users = documentSnapshot.toObject<UserDTO>()!!
-                    account = users.account
-                    binding.accountViewNumber.text = account
-                    Log.d(tag, "계좌번호: $account 로 변경됨")
+                    var users = documentSnapshot.toObject<UserDTO>()!!
+                    myAccount = users.account
+                    cache = users.cache!!
+                    binding.accountViewNumber.text = myAccount
+                    binding.accountViewCache.text = cache.toString()
+                    Log.d(tag, "계좌번호: ${myAccount}, 출금가능액: ${cache}로 변경됨")
                 }
         }
+
+        // 처음에는 안보이게 하기
+        binding.inputAccountLayout.visibility = View.INVISIBLE  // 계좌번호 입력 안보이게 하기
+        binding.btnDepositLayout.visibility = View.INVISIBLE    // btnDepositLayout 안보이게
 
         // 로그아웃 버튼 클릭시
         binding.btnLogout.setOnClickListener {
@@ -57,9 +69,30 @@ class DepositActivity : AppCompatActivity() {
             mAuth.signOut()
             startActivity(intent)
         }
-
     } // end onCreate()
 
+    // 리사이클러뷰 설정
+    fun setRecycler() {
+        var query = reference.reference.child("Transact")
+            .child(time).child("transfer")
+            .orderByChild("timestamp")
+        var options = FirebaseRecyclerOptions.Builder<TransactDTO.DepositAndWithdrawal>()
+            .setQuery(query, TransactDTO.DepositAndWithdrawal::class.java).build()
+//        adapter = TransactAdapter(options, this)
+    }
+
+    // 확인 버튼 클릭 이벤트 처리
+    fun onClickOkay(view: View) {
+        if (binding.inputCache.text.isNotEmpty()) {
+            binding.btnOkay.visibility = View.INVISIBLE             // 확인 버튼 숨기고
+            binding.inputAccountLayout.visibility = View.VISIBLE    // 계좌번호 입력버튼 나타남
+            binding.btnDepositLayout.visibility = View.VISIBLE      // 이체 버튼 레이아웃 나타남
+        } else {
+            Toast.makeText(this, "금액을 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // 내 통장에 입금하기 버튼 클릭시
     fun onDeposit(view: View) {
         var inputCache = binding.inputCache.text
         cache = Integer.parseInt(inputCache.toString())
@@ -70,48 +103,41 @@ class DepositActivity : AppCompatActivity() {
         firestore.collection("Users").document(email).get().addOnCompleteListener {
             var user = it.result?.toObject(UserDTO::class.java)!!
             var myCache = user.cache!!
-
             // 캐시가 20억이 넘을 경우 20억으로 고정: Int 형 값 넘어가는 오류 방지
             if (myCache + cache.toLong() > 2000000000) {
                 myCache == 2000000000
                 // 내 통장에 입금한 금액 데이터 전달하기
-                var transfer = TransactDTO.DepositAndWithdrawal()
-                var deposit = transfer.deposit // 입금 금액
-                var dateFormat = SimpleDateFormat("yyyy-MM-dd") // 거래 시간
-                var mDate = Date()
-                account = transfer.account // 입금한 계좌(여기선 내 계좌)
-                transfer.timestamp = System.currentTimeMillis()
-                // 입금 내역 리얼타임데이터베이스에 추가
-                reference.reference.child("Transact").child(time)
-                    .child("transfers").push()
-                    .setValue(transfer).addOnCompleteListener {
-//                        inputCache.text = null
-                    }
             } else { // 그 외는 입금한 금액만큼만
                 myCache += cache
             }
-
             // 유저DB 갱신
             firestore.collection("Users").document(email).update("cache", myCache)
             finish()
         }
         Log.d(tag, "내 통장에 입금 성공")
     }
-    
-    // 리사이클러뷰 설정
-    fun setRecycler() {
-        var query = reference.reference.child("Transact")
-            .child(time).child("transfer")
-            .orderByChild("timestamp")
-        var options = FirebaseRecyclerOptions.Builder<TransactDTO.DepositAndWithdrawal>()
-            .setQuery(query, TransactDTO.DepositAndWithdrawal::class.java).build()
-//        adapter = TransactAdapter(options, this)
-        
-    }
 
-    fun onDepositCancel(view: View) {
-        Log.d(tag, "입금하기 취소")
-        moveHome()
+    // 다른 계좌로 이체하기 클릭시
+    fun onDepositTrans(view: View) {
+        var inputCache = binding.inputCache.text
+        cache = Integer.parseInt(inputCache.toString())
+        email = mAuth.currentUser?.email!!  // 유저 아이디 가져오기
+
+        // 유저정보 받아오기
+        firestore.collection("Users").document(email).get().addOnCompleteListener {
+            var user = it.result?.toObject(UserDTO::class.java)!!
+            var myCache = user.cache!!
+            // 캐시가 20억이 넘을 경우 20억으로 고정: Int 형 값 넘어가는 오류 방지
+            if (myCache - cache.toLong() > 2000000000) {
+                myCache == 2000000000
+                // 내 통장에 입금한 금액 데이터 전달하기
+            } else { // 그 외는 입금한 금액만큼만
+                myCache -= cache
+            }
+            // 유저DB 갱신
+            firestore.collection("Users").document(email).update("cache", myCache)
+        }
+        Log.d(tag, "다른 계좌로 이체")
     }
 
     private fun moveHome() {
