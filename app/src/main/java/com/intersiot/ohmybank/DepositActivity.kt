@@ -25,9 +25,8 @@ class DepositActivity : AppCompatActivity() {
     // firebase 인증
     private var firestore = FirebaseFirestore.getInstance()
     private var mAuth = FirebaseAuth.getInstance()
-    private var reference = FirebaseDatabase.getInstance()
 
-    private var transfer = TransactDTO.DepositAndWithdrawal()
+    private var transfer = TransactDTO()
 
     private var myAccount: String? = null
     private var cache = 0
@@ -41,8 +40,6 @@ class DepositActivity : AppCompatActivity() {
         binding = ActivityDepositBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        time = intent.setStringExtra()
 
         // 유저 아이디 가져오기
         var id = mAuth.currentUser?.email
@@ -70,16 +67,6 @@ class DepositActivity : AppCompatActivity() {
             startActivity(intent)
         }
     } // end onCreate()
-
-    // 리사이클러뷰 설정
-    fun setRecycler() {
-        var query = reference.reference.child("Transact")
-            .child(time).child("transfer")
-            .orderByChild("timestamp")
-        var options = FirebaseRecyclerOptions.Builder<TransactDTO.DepositAndWithdrawal>()
-            .setQuery(query, TransactDTO.DepositAndWithdrawal::class.java).build()
-//        adapter = TransactAdapter(options, this)
-    }
 
     // 확인 버튼 클릭 이벤트 처리
     fun onClickOkay(view: View) {
