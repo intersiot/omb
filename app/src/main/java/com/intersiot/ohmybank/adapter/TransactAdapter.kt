@@ -10,6 +10,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.intersiot.ohmybank.R
 import com.intersiot.ohmybank.model.TransactDTO
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TransactAdapter(options: FirebaseRecyclerOptions<TransactDTO>) :
@@ -46,10 +47,12 @@ class TransactAdapter(options: FirebaseRecyclerOptions<TransactDTO>) :
             position: Int,
             model: TransactDTO) {
 
+        val date = Date(model.timestamp)
+        val format = SimpleDateFormat("yyyy-MM-dd")
+
         holder.account.text = model.account
-        holder.transferCache.text = model.deposit.toString()
-        holder.transferCache.text = model.withdrawal.toString()
-        holder.transferCache.text = model.cache.toString()
+        holder.transferCache.text = model.payment.toString()
+        holder.timestamp.text = format.format(date)
     }
 
 }

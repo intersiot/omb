@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.android.volley.Cache
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.intersiot.ohmybank.adapter.TransactAdapter
@@ -25,15 +27,11 @@ class DepositActivity : AppCompatActivity() {
     // firebase 인증
     private var firestore = FirebaseFirestore.getInstance()
     private var mAuth = FirebaseAuth.getInstance()
-
-    private var transfer = TransactDTO()
-
-    private var myAccount: String? = null
+    private var transactDTO = TransactDTO()
     private var cache = 0
+    private var payment = 0
     private var account: String? = null
-    private lateinit var email: String
-    private lateinit var time: String // 시간
-    private lateinit var adater: TransactAdapter // 거래내역 어댑터
+    private var myAccount: String? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +46,10 @@ class DepositActivity : AppCompatActivity() {
                 .addOnSuccessListener { documentSnapshot ->
                     var users = documentSnapshot.toObject<UserDTO>()!!
                     myAccount = users.account
-                    cache = users.cache!!
+                    var myCache = users.cache!!
                     binding.accountViewNumber.text = myAccount
-                    binding.accountViewCache.text = cache.toString()
-                    Log.d(tag, "계좌번호: ${myAccount}, 출금가능액: ${cache}로 변경됨")
+                    binding.accountViewCache.text = myCache.toString()
+                    Log.d(tag, "계좌번호: ${myAccount}, 출금가능액: ${myCache}로 변경됨")
                 }
         }
 
@@ -83,9 +81,9 @@ class DepositActivity : AppCompatActivity() {
     fun onDeposit(view: View) {
         var inputCache = binding.inputCache.text
         cache = Integer.parseInt(inputCache.toString())
-
+        payment = cache
         // 유저 아이디 가져오기
-        email = mAuth.currentUser?.email!!
+        var email = mAuth.currentUser?.email!!
         // 유저정보 받아오기
         firestore.collection("Users").document(email).get().addOnCompleteListener {
             var user = it.result?.toObject(UserDTO::class.java)!!
@@ -93,22 +91,50 @@ class DepositActivity : AppCompatActivity() {
             // 캐시가 20억이 넘을 경우 20억으로 고정: Int 형 값 넘어가는 오류 방지
             if (myCache + cache.toLong() > 2000000000) {
                 myCache == 2000000000
-                // 내 통장에 입금한 금액 데이터 전달하기
+                // 셋팅
+                transactDTO.id = email
+                transactDTO.account = myAccount
+                transactDTO.payment = payment
+                transactDTO.timestamp = System.currentTimeMillis()
             } else { // 그 외는 입금한 금액만큼만
                 myCache += cache
+                // 셋팅
+                transactDTO.id = email
+                transactDTO.account = myAccount
+                transactDTO.payment = payment
+                transactDTO.timestamp = System.currentTimeMillis()
             }
-            // 유저DB 갱신
+            /*
+            유저DB 갱신
             firestore.collection("Users").document(email).update("cache", myCache)
             finish()
+            */
+            // DB Users -> update() : 수정
+            mAuth.currentUser!!.email?.let { it1 ->
+                firestore.collection("Users")
+                        .document(it1).update("cache", FieldValue.increment(cache.toLong()))
+            }
+            // DB Transact
+            firestore.collection("Transact").document()
+                    .set(transactDTO).addOnCompleteListener {
+                        if (it.isComplete) {
+                            // 내 통장에 입금 성공
+                            Log.d(tag, "내 통장에 입금 성공")
+                            val intent = Intent(applicationContext, ResultActivity::class.java)
+                            // 데이터 전달
+                            intent.putExtra("account", account)
+                            intent.putExtra("payment", payment)
+                            startActivity(intent) // 데이터 이동
+                        }
+                    }
         }
-        Log.d(tag, "내 통장에 입금 성공")
-    }
+    } // end onDeposit()
 
     // 다른 계좌로 이체하기 클릭시
     fun onDepositTrans(view: View) {
         var inputCache = binding.inputCache.text
         cache = Integer.parseInt(inputCache.toString())
-        email = mAuth.currentUser?.email!!  // 유저 아이디 가져오기
+        var email = mAuth.currentUser?.email!!  // 유저 아이디 가져오기
 
         // 유저정보 받아오기
         firestore.collection("Users").document(email).get().addOnCompleteListener {

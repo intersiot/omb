@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.intersiot.ohmybank.adapter.TransactAdapter
 import com.intersiot.ohmybank.databinding.ActivityTransactionBinding
@@ -24,11 +25,10 @@ class TransactionActivity : AppCompatActivity() {
     // firebase 인증
     private var mAuth = FirebaseAuth.getInstance()
     private var firestroe = FirebaseFirestore.getInstance()
-    // 계좌 거래내역을 저장할 변수
-    private var transfer = TransactDTO.DepositAndWithdrawal()
     // 계좌 거래내역 리사이클러 어댑터
     private lateinit var adapter: TransactAdapter
-
+    // 리사이클러뷰
+    private lateinit var recyclerView: RecyclerView
 
     var tag = "TransactionActivity"
 
@@ -38,14 +38,16 @@ class TransactionActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        // recyclerView
+        recyclerView = binding.transferRecyclerView
+
         // 유저 정보 가져오기
-        var users = UserDTO()
         var id = mAuth.currentUser?.email
 
         if (id != null) {
             firestroe.collection("Users").document(id!!).get()
                     .addOnSuccessListener { documentSnapshot ->
-                        users = documentSnapshot.toObject<UserDTO>()!!
+                        var users = documentSnapshot.toObject<UserDTO>()!!
                         var account = users.account
                         var cache = users.cache
                         binding.accountView.text = account
@@ -69,4 +71,14 @@ class TransactionActivity : AppCompatActivity() {
         }
     } // end onCreate()
 
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    } // end onStart()
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    } // end onStop()
+    
 } // end Activity

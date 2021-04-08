@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewsWebViewActivity"></activity>
+        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".NewsWebViewActivity" />
         <activity android:name=".NewsActivity" />
         <activity android:name=".TabLayout" />
         <activity android:name=".TransactionActivity" />
