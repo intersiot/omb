@@ -6,19 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.android.volley.Cache
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.intersiot.ohmybank.adapter.TransactAdapter
 import com.intersiot.ohmybank.databinding.ActivityDepositBinding
 import com.intersiot.ohmybank.model.TransactDTO
 import com.intersiot.ohmybank.model.UserDTO
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DepositActivity : AppCompatActivity() {
     private val tag: String = "DepositActivity"
@@ -27,7 +21,6 @@ class DepositActivity : AppCompatActivity() {
     // firebase 인증
     private var firestore = FirebaseFirestore.getInstance()
     private var mAuth = FirebaseAuth.getInstance()
-
     private var transactDTO = TransactDTO()
     private var payment = 0
     private var account: String ?= null
@@ -104,6 +97,7 @@ class DepositActivity : AppCompatActivity() {
             transactDTO.id = id
             transactDTO.account = account
             transactDTO.payment = payment
+            transactDTO.cache = myCache
             transactDTO.timestamp = System.currentTimeMillis()
             // DB Users Update() : 수정
             mAuth.currentUser?.email?.let {
@@ -147,6 +141,7 @@ class DepositActivity : AppCompatActivity() {
                 transactDTO.id = id
                 transactDTO.account = account
                 transactDTO.payment = payment
+                transactDTO.cache = myCache
                 transactDTO.timestamp = System.currentTimeMillis()
                 // DB Users Update() : 수정
                 mAuth.currentUser?.email?.let {
@@ -174,6 +169,7 @@ class DepositActivity : AppCompatActivity() {
     }
     
     private fun moveHome() {
+        Log.d(tag, "메인 액티비티로 이동")
         var intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)

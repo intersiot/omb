@@ -3,6 +3,7 @@ package com.intersiot.ohmybank
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,9 +13,6 @@ import com.intersiot.ohmybank.databinding.ActivityResultBinding
 class ResultActivity : AppCompatActivity() {
     // layout view
     private lateinit var binding: ActivityResultBinding
-    // firebase 인증
-    private var mAuth = FirebaseAuth.getInstance()
-    private var firestroe = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,15 +33,16 @@ class ResultActivity : AppCompatActivity() {
         binding.logo.setOnClickListener {
             moveHome()
         }
-
     }   // end onCreate()
 
     fun onClickOkay(view: View) {
+        Log.d("ResultActivity", "거래내역 선택됨.")
         var intent = Intent(this, TransactionActivity::class.java)
         startActivity(intent)
     }
 
     private fun moveHome() {
+        Log.d("ResultActivity", "메인 액티비티로 이동")
         var intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
