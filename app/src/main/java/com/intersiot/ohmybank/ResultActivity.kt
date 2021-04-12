@@ -23,15 +23,13 @@ class ResultActivity : AppCompatActivity() {
         setContentView(view)
 
         // intent로 전달된 데이터 받기
-        var intent = getIntent()
+        var intent = intent
         var account = intent.getStringExtra("account")
         var payment = intent.getIntExtra("payment", 0)
 
         // 받은 데이터로 셋팅
-        var viewAccount = binding.accountViewNumber
-        var viewInputCache = binding.inputCacheView
-//        viewAccount.text = account.toString()
-//        viewInputCache.text = payment.toString()
+        binding.accountViewNumber.text = account
+        binding.inputCacheView.text = payment.toString()
 
         // 로고 클릭시
         binding.logo.setOnClickListener {

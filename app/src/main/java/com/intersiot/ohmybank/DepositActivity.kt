@@ -30,6 +30,7 @@ class DepositActivity : AppCompatActivity() {
 
     private var transactDTO = TransactDTO()
     private var payment = 0
+    private var account: String ?= null
     private var myAccount: String ?= null
     private var myCache = 0
 
@@ -142,9 +143,9 @@ class DepositActivity : AppCompatActivity() {
                     myCache -= payment
                 }
                 // settings
-                var account = binding.inputAccount.text
+                account = binding.inputAccount.text.toString()
                 transactDTO.id = id
-                transactDTO.account = account.toString()
+                transactDTO.account = account
                 transactDTO.payment = payment
                 transactDTO.timestamp = System.currentTimeMillis()
                 // DB Users Update() : 수정
