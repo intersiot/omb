@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,7 +37,7 @@ class DepositActivity : AppCompatActivity() {
         // DB에서 유저 데이터 가져오기
         var id = mAuth.currentUser?.email
         if (id != null) {
-            firestore.collection("Users").document(id!!).get()
+            firestore.collection("Users").document(id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     var users = documentSnapshot.toObject<UserDTO>()!!
                     myAccount = users.account
@@ -81,8 +82,7 @@ class DepositActivity : AppCompatActivity() {
     fun onDeposit(view: View) {
         var inputCache = binding.inputCache.text // 입력받은 cache 값
         payment = Integer.parseInt(inputCache.toString())
-        var id = mAuth.currentUser?.email    // 유저 아이디 가져오기
-        firestore.collection("Users").document(id!!).get().addOnSuccessListener { documentSnapshot ->
+        firestore.collection("Users").document(mAuth.currentUser?.email!!).get().addOnSuccessListener { documentSnapshot ->
             var users = documentSnapshot.toObject<UserDTO>()!!
             myAccount = users.account
             myCache = users.cache!!
@@ -94,25 +94,25 @@ class DepositActivity : AppCompatActivity() {
             }
             // settings
             var account = myAccount
-            transactDTO.id = id
+            transactDTO.id = mAuth.currentUser?.email
             transactDTO.account = account
-            transactDTO.payment = payment
+            transactDTO.deposit = payment
             transactDTO.cache = myCache
             transactDTO.timestamp = System.currentTimeMillis()
             // DB Users Update() : 수정
-            mAuth.currentUser?.email?.let {
-                firestore.collection("Users").document(it)
-                        .update("cache", FieldValue.increment(payment.toLong()))    // increment(paymnet)면 증가한다는 의미
-            }
+            firestore.collection("Users")
+                    .document(mAuth.currentUser?.email!!)
+                    .update("cache", FieldValue.increment(payment.toLong()))
             // DB Transact
-            firestore.collection("Transact").document()
-                    .set(transactDTO).addOnCompleteListener {
+            firestore.collection("Transact")
+                    .document()
+                    .set(transactDTO)
+                    .addOnCompleteListener {
                         if (it.isComplete) {    // 내 통장에 입금 성공
                             var intent = Intent(applicationContext, ResultActivity::class.java)
                             // 데이터 전달
-                            intent.putExtra("id", id)
                             intent.putExtra("account", account)
-                            intent.putExtra("payment", payment)
+                            intent.putExtra("payment", payment) // 입금한 금액
                             startActivity(intent)
                             Log.d(tag, "$account 로 $payment 원 입금 성공! 현재 통장 잔액: $myCache")
                             Toast.makeText(this, "내 통장 입금 성공!", Toast.LENGTH_SHORT).show()
@@ -126,8 +126,7 @@ class DepositActivity : AppCompatActivity() {
         if (binding.inputAccount.text.isNotEmpty()) {
             var inputCache = binding.inputCache.text // 입력받은 cache 값
             payment = Integer.parseInt(inputCache.toString())
-            var id = mAuth.currentUser?.email    // 유저 아이디 가져오기
-            firestore.collection("Users").document(id!!).get().addOnSuccessListener { documentSnapshot ->
+            firestore.collection("Users").document(mAuth.currentUser?.email!!).get().addOnSuccessListener { documentSnapshot ->
                 var users = documentSnapshot.toObject<UserDTO>()!!
                 myCache = users.cache!!
 
@@ -138,27 +137,24 @@ class DepositActivity : AppCompatActivity() {
                 }
                 // settings
                 account = binding.inputAccount.text.toString()
-                transactDTO.id = id
+                transactDTO.id = mAuth.currentUser?.email
                 transactDTO.account = account
-                transactDTO.payment = payment
+                transactDTO.withdraw = payment
                 transactDTO.cache = myCache
                 transactDTO.timestamp = System.currentTimeMillis()
                 // DB Users Update() : 수정
-                mAuth.currentUser?.email?.let {
-                    firestore.collection("Users").document(it)
-                            .update("cache", FieldValue.increment(-payment.toLong()))    // increment(paymnet)면 증가한다는 의미
-                }
+                firestore.collection("Users").document(mAuth.currentUser?.email!!)
+                        .update("cache", FieldValue.increment(-payment.toLong()))
                 // DB Transact
                 firestore.collection("Transact").document()
                         .set(transactDTO).addOnCompleteListener {
                             if (it.isComplete) {    // 계좌이체 성공
                                 var intent = Intent(applicationContext, ResultActivity::class.java)
                                 // 데이터 전달
-                                intent.putExtra("id", id)
                                 intent.putExtra("account", account)
-                                intent.putExtra("payment", payment)
+                                intent.putExtra("payment", payment)    // 출금한 금액
                                 startActivity(intent)
-                                Log.d(tag, "$account 로 $payment 원 입금 성공! 현재 통장 잔액: $myCache")
+                                Log.d(tag, "$account 로 $payment 원 이체 성공! 현재 통장 잔액: $myCache")
                                 Toast.makeText(this, "계좌이체 성공!", Toast.LENGTH_SHORT).show()
                             }
                         }

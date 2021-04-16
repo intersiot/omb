@@ -1,11 +1,11 @@
-package com.intersiot.ohmybank
+package com.intersiot.ohmybank;
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,11 +21,9 @@ class TransactionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTransactionBinding
     // firebase 인증
     private var mAuth = FirebaseAuth.getInstance()
-    private var firestroe = FirebaseFirestore.getInstance()
+    private var firestore = FirebaseFirestore.getInstance()
     // 계좌 거래내역 리사이클러 어댑터
     private lateinit var adapter: TransactAdapter
-    // 리사이클러뷰
-    private lateinit var recyclerView: RecyclerView
 
     var tag = "TransactionActivity"
 
@@ -36,9 +34,8 @@ class TransactionActivity : AppCompatActivity() {
         setContentView(view)
 
         // 유저 정보 가져오기
-        var id = mAuth.currentUser?.email
-        if (id != null) {
-            firestroe.collection("Users").document(id).get()
+        if (mAuth.currentUser?.email != null) {
+            firestore.collection("Users").document(mAuth.currentUser?.email!!).get()
                     .addOnSuccessListener { documentSnapshot ->
                         var users = documentSnapshot.toObject<UserDTO>()!!
                         var account = users.account
@@ -50,20 +47,6 @@ class TransactionActivity : AppCompatActivity() {
                         Log.d(tag, "보유금액: ${cache}로 변경됨")
                     }
         }
-
-        var query = firestroe.collection("Transact")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .whereEqualTo("id", id)
-        var options = FirestoreRecyclerOptions.Builder<TransactDTO>()
-                .setQuery(query, TransactDTO::class.java).build()
-        adapter = TransactAdapter(options)
-
-        // recyclerView
-        recyclerView = binding.transferRecyclerView
-        // 리사이클러뷰 매니저
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext,
-            LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = adapter
 
         // bottom navigation click event
         binding.bottomNavMybank.setOnClickListener {
@@ -85,7 +68,26 @@ class TransactionActivity : AppCompatActivity() {
             mAuth.signOut()
             startActivity(intent)
         }
+
+        setRecycler()
     } // end onCreate()
+
+    // RecyclerView 설정
+    fun setRecycler() {
+        // 데이터 조회
+        var query = firestore.collection("Transact")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereEqualTo("id", mAuth.currentUser?.email)
+        var options = FirestoreRecyclerOptions.Builder<TransactDTO>()
+            .setQuery(query, TransactDTO::class.java).build()
+        adapter = TransactAdapter(options)
+        // 리사이클러뷰 설정
+        binding.transferRecyclerView.setHasFixedSize(true)
+        var layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.transferRecyclerView.layoutManager = layoutManager
+        binding.transferRecyclerView.adapter = adapter
+    }
 
     override fun onStart() {
         super.onStart()

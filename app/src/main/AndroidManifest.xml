@@ -15,7 +15,6 @@
         <activity android:name=".ResultActivity"></activity>
         <activity android:name=".NewsWebViewActivity" />
         <activity android:name=".NewsActivity" />
-        <activity android:name=".TabLayout" />
         <activity android:name=".TransactionActivity" />
         <activity android:name=".DepositActivity" />
         <activity android:name=".CreateAccountActivity" />

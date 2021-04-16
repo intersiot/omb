@@ -34,7 +34,8 @@ class NewsActivity : AppCompatActivity(), NewsAdapter.setActivityMove {
         setContentView(view)
 
         binding.newsContents.setHasFixedSize(true)
-        binding.newsContents.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.newsContents.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         queue = Volley.newRequestQueue(this)
         //        queue.add(stringRequest);
         getNews()
