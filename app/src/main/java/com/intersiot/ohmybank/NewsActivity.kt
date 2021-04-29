@@ -53,6 +53,12 @@ class NewsActivity : AppCompatActivity(), NewsAdapter.setActivityMove {
             Log.d(tag, "거래내역으로 이동")
             startActivity(intent)
         }
+
+        // 로고 클릭시
+        binding.logo.setOnClickListener {
+            moveHome()
+        }
+
     } // end onCreate()
 
     private fun getNews() {
@@ -100,10 +106,10 @@ class NewsActivity : AppCompatActivity(), NewsAdapter.setActivityMove {
         startActivity(intent)
     }
 
-    fun moveHome(view: View) {
+    private fun moveHome() {
+        Log.d(tag, "메인 액티비티로 이동")
         var intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }
-
 } // end Activity

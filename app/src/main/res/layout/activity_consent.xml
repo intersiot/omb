@@ -55,20 +55,27 @@
                     app:layout_constraintStart_toEndOf="@+id/firstCheck"
                     app:layout_constraintTop_toTopOf="@+id/firstCheck" />
 
-                <ScrollView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/scrollView2"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/border_line"
                     app:layout_constraintTop_toBottomOf="@+id/firstCheck">
-
-                    <TextView
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:text="@string/terms" />
-                </ScrollView>
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:text="@string/terms" />
+                    </ScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <CheckBox
                     android:id="@+id/secondCheck"
@@ -89,20 +96,27 @@
                     app:layout_constraintStart_toEndOf="@+id/secondCheck"
                     app:layout_constraintTop_toTopOf="@+id/secondCheck" />
 
-                <ScrollView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/scrollView3"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/border_line"
                     app:layout_constraintTop_toBottomOf="@+id/secondCheck">
-
-                    <TextView
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:text="@string/consent" />
-                </ScrollView>
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:text="@string/consent" />
+                    </ScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <CheckBox
                     android:id="@+id/thirdCheck"
@@ -124,7 +138,7 @@
                     app:layout_constraintStart_toEndOf="@+id/thirdCheck"
                     app:layout_constraintTop_toTopOf="@+id/thirdCheck" />
 
-                <ScrollView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/scrollView4"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
@@ -132,12 +146,23 @@
                     android:background="@drawable/border_line"
                     app:layout_constraintTop_toBottomOf="@+id/thirdCheck">
 
-                    <TextView
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:text="@string/promotion" />
-                </ScrollView>
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:text="@string/promotion" />
+
+                    </ScrollView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"

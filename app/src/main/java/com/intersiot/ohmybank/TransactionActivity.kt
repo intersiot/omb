@@ -68,6 +68,11 @@ class TransactionActivity : AppCompatActivity() {
             mAuth.signOut()
             startActivity(intent)
         }
+        
+        // 메인 액티비티로 이동
+        binding.logo.setOnClickListener {
+            moveHome()
+        }
 
         setRecycler()
     } // end onCreate()
