@@ -79,12 +79,13 @@
                         android:layout_marginStart="4dp"
                         android:background="#FFFFFF"
                         android:backgroundTint="#FFFFFF"
-                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
                         android:textColor="#49A6CD"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView_name_eng"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="RtlSymmetry" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,12 +117,13 @@
                         android:layout_marginStart="4dp"
                         android:background="#FFFFFF"
                         android:backgroundTint="#FFFFFF"
-                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
                         android:textColor="#49A6CD"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView_phone_number"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="RtlSymmetry" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -146,19 +148,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
-                        android:id="@+id/input_email"
+                    <TextView
+                        android:id="@+id/output_email"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="4dp"
                         android:background="#FFFFFF"
-                        android:backgroundTint="#FFFFFF"
-                        android:paddingLeft="16dp"
-                        android:textColor="#49A6CD"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView_email"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="RtlSymmetry" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -196,7 +199,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/textView_address"
+                        android:id="@+id/textView_address_title"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:background="#FFFFFF"
@@ -208,17 +211,31 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/input_address"
+                        android:id="@+id/textview_address"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="4dp"
                         android:background="#FFFFFF"
-                        android:paddingLeft="16dp"
-                        android:textColor="#49A6CD"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView_address"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_change_address"
+                        app:layout_constraintStart_toEndOf="@+id/textView_address_title"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/btn_change_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/logoColor"
+                        android:gravity="center"
+                        android:text="변경"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -250,7 +267,7 @@
                         android:layout_marginStart="4dp"
                         android:background="#FFFFFF"
                         android:backgroundTint="#FFFFFF"
-                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
                         android:textColor="#49A6CD"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -273,13 +290,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_home" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RadioGroup
             android:id="@+id/layout_choice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_choice">
@@ -313,7 +331,7 @@
                 app:layout_constraintStart_toEndOf="@+id/checked_job"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/title_tax"
@@ -327,19 +345,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_choice" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RadioGroup
                 android:id="@+id/layout_tax"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_tax">
 
                 <RadioButton
-                    android:id="@+id/checked_yes"
+                    android:id="@+id/tax_yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="예"
@@ -348,15 +367,16 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RadioButton
+                    android:id="@+id/tax_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="아니요"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/checked_yes"
+                    app:layout_constraintStart_toEndOf="@+id/tax_yes"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/btn_info_chage"

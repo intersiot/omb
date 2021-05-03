@@ -56,12 +56,14 @@ class CreateAccountActivity : AppCompatActivity() {
         // 유저 아이디 가져오기
         email = mAuth?.currentUser?.email!!
         // 유저정보 받아오기
-        firestore.collection("Users").document(email).get().addOnCompleteListener {
+        firestore.collection("Users")
+            .document(email).get().addOnCompleteListener {
             var user = it.result?.toObject(UserDTO::class.java)!!
             user.account = account
         }
         // 유저 데이터베이스 갱신
-        firestore.collection("Users").document(email).update("account", account)
+        firestore.collection("Users")
+            .document(email).update("account", account)
         finish()
 
         return numStr
