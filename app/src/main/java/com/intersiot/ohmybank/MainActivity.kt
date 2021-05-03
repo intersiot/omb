@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -106,4 +107,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     } // end onResume()
+
+    // 마이페이지로 이동
+    fun infoChange(view: View) {
+        val intent = Intent(this, MyInfoActivity::class.java)
+        Log.d(tag, "마이페이지로 이동")
+        startActivity(intent)
+    } // end infoChange()
 } // end activity()

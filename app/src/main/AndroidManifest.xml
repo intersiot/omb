@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".DaumWebViewActivity"></activity>
+        <activity android:name=".InfoChageActivity" />
+        <activity android:name=".MyInfoActivity" />
+        <activity android:name=".ResultActivity" />
         <activity android:name=".NewsWebViewActivity" />
         <activity android:name=".NewsActivity" />
         <activity android:name=".TransactionActivity" />
