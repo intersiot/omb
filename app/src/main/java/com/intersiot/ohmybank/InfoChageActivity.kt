@@ -46,13 +46,13 @@ class InfoChageActivity : AppCompatActivity() {
         // 이메일은 아이디이므로 고정해야 해서.
         if (id != null) {
             firestore.collection("Users").document(mAuth.currentUser?.email!!).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    users = documentSnapshot.toObject<UserDTO>()!!
-                    var email = users.id
-                    var address = users.address
-                    binding.outputEmail.text = email
-                    binding.textviewAddress.text = address
-                }
+                    .addOnSuccessListener { documentSnapshot ->
+                        users = documentSnapshot.toObject<UserDTO>()!!
+                        var email = users.id
+                        var address = users.address
+                        binding.outputEmail.text = email
+                        binding.textviewAddress.text = address
+                    }
         }
         // 주소 변경
         binding.btnChangeAddress.setOnClickListener {
@@ -71,54 +71,54 @@ class InfoChageActivity : AppCompatActivity() {
             var homeNumber = binding.inputHomeNumber.text.toString()
             Log.e(tag, "테스트4")
             firestore.collection("Users").document(id!!).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    users = documentSnapshot.toObject<UserDTO>()!!
-                    Log.e(tag, "테스트5")
-                    // settings
-                    users.engname = nameEng
-                    users.phone = phone
-                    users.home = homeNumber
-                    users.address = address
-                    Log.e(tag, "테스트55")
-                    // 라디오버튼 두개 처리
-                    if (binding.checkedHome.isChecked) {
-                        post = binding.checkedHome.text.toString()
-                        users.post = post
-                        Log.d(tag, "우편: 집")
-                    } else if (binding.checkedJob.isChecked) {
-                        post = binding.checkedJob.text.toString()
-                        users.post = post
-                        Log.d(tag, "우편: 직장")
-                    } else if (binding.checkedNo.isChecked) {
-                        post = binding.checkedNo.text.toString()
-                        users.post = post
-                        Log.d(tag, "우편: 안받음")
+                    .addOnSuccessListener { documentSnapshot ->
+                        users = documentSnapshot.toObject<UserDTO>()!!
+                        Log.e(tag, "테스트5")
+                        // settings
+                        users.engname = nameEng
+                        users.phone = phone
+                        users.home = homeNumber
+                        users.address = address
+                        Log.e(tag, "테스트55")
+                        // 라디오버튼 두개 처리
+                        if (binding.checkedHome.isChecked) {
+                            post = binding.checkedHome.text.toString()
+                            users.post = post
+                            Log.d(tag, "우편: 집")
+                        } else if (binding.checkedJob.isChecked) {
+                            post = binding.checkedJob.text.toString()
+                            users.post = post
+                            Log.d(tag, "우편: 직장")
+                        } else if (binding.checkedNo.isChecked) {
+                            post = binding.checkedNo.text.toString()
+                            users.post = post
+                            Log.d(tag, "우편: 안받음")
+                        }
+                        Log.d(tag, "테스트6")
+                        if (binding.taxYes.isChecked) {
+                            tax = binding.taxYes.text.toString()
+                            users.tax = tax
+                            Log.d(tag, "납세: 한국")
+                        } else if (binding.taxNo.isChecked) {
+                            tax = binding.taxNo.text.toString()
+                            users.tax = tax
+                            Log.d(tag, "납세: 한국 아님")
+                        }
+                        Log.e(tag, "테스트7")
+                        // DB 업데이트 : 수정
+                        firestore.collection("Users").document(id!!).update(
+                                "engname", nameEng,
+                                "phone", phone,
+                                "home", homeNumber,
+                                "address", address,
+                                "post", post,
+                                "tax", tax
+                        )
+                        Log.e(tag, "테스트8")
+                        val intent = Intent(this, MyInfoActivity::class.java)
+                        Log.d(tag, "내 정보 페이지로 이동")
+                        startActivity(intent)
                     }
-                    Log.d(tag, "테스트6")
-                    if (binding.taxYes.isChecked) {
-                        tax = binding.taxYes.text.toString()
-                        users.tax = tax
-                        Log.d(tag, "납세: 한국")
-                    } else if (binding.taxNo.isChecked) {
-                        tax = binding.taxNo.text.toString()
-                        users.tax = tax
-                        Log.d(tag, "납세: 한국 아님")
-                    }
-                    Log.e(tag, "테스트7")
-                    // DB 업데이트 : 수정
-                    firestore.collection("Users").document(id!!).update(
-                        "engname", nameEng,
-                        "phone", phone,
-                        "home", homeNumber,
-                        "address", address,
-                        "post", post,
-                        "tax", tax
-                    )
-                    Log.e(tag, "테스트8")
-                    val intent = Intent(this, MyInfoActivity::class.java)
-                    Log.d(tag, "내 정보 페이지로 이동")
-                    startActivity(intent)
-                }
         }
     } // end onCreate()
 

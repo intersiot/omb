@@ -290,46 +290,46 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_home" />
 
-        <RadioGroup
-            android:id="@+id/layout_choice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_choice">
-
-            <RadioButton
-                android:id="@+id/checked_home"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/layout_choice"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="집"
-                android:textSize="18sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/title_choice">
 
-            <RadioButton
-                android:id="@+id/checked_job"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="직장"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/checked_home"
-                app:layout_constraintTop_toTopOf="parent" />
+                <RadioButton
+                    android:id="@+id/checked_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="집"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <RadioButton
-                android:id="@+id/checked_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="우편받지 않음"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/checked_job"
-                app:layout_constraintTop_toTopOf="parent" />
+                <RadioButton
+                    android:id="@+id/checked_job"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="직장"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/checked_home"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/checked_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="우편받지 않음"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/checked_job"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </RadioGroup>
 

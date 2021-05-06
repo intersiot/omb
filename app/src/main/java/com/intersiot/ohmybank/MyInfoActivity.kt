@@ -1,6 +1,7 @@
 package com.intersiot.ohmybank
 
 import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -47,6 +48,13 @@ class MyInfoActivity : AppCompatActivity() {
                     Log.e(tag, "회원탈퇴 실패함")
                 }
             }
+        }
+        
+        // 확인 클릭했을 때
+        binding.btnOk.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            Log.d(tag, "메인 액티비티로 이동")
         }
     } // end onCreate()
 
